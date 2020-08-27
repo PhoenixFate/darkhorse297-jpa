@@ -1,6 +1,7 @@
 package com.phoenix.test;
 
 import org.apache.log4j.Logger;
+
 /**
  *@author linbingwen
  *@2015年5月18日9:14:21
