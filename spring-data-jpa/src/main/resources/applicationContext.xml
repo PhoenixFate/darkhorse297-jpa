@@ -55,6 +55,7 @@
     </bean>
 
     <!--3.整合spring data jpa-->
+    <!--对此包下面对dao接口进行动态代理增强-->
     <jpa:repositories base-package="com.phoenix.dao" transaction-manager-ref="transactionManager"
                    entity-manager-factory-ref="entityManagerFactoty" />
 
