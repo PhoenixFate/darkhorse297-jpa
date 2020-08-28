@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import java.util.List;
 
 /**
  * SpringDataJpa dao层的接口规范
@@ -52,5 +53,41 @@ public interface CustomerDao extends JpaRepository<Customer,Long>, JpaSpecificat
     @Query("update Customer set custName=?1 where custId=?2")
     @Modifying
     void updateCustomerName(String name,Long id);
+
+
+    /**
+     * @Query
+     * value ：jpql or sql语句
+     * nativeQuery（是否使用本地查询）: false (默认，使用jpql查询) ｜ true 使用sql查询
+     *
+     */
+    @Query(value = "select * from cst_customer",nativeQuery = true)
+    List<Customer> findAllBySql();
+
+    @Query(value = "select * from cst_customer where cust_name like ?1",nativeQuery = true)
+    List<Customer> findByNameBySql(String name);
+
+
+    /**
+     * 按照方法名称规则进行查询
+     */
+    List<Customer> findByCustName(String custName);
+
+    /**
+     * findBy+属性名称
+     * 默认使用属性名称完全匹配进行查询
+     * findBy+属性名称+查询方法(like | isNull)
+     *
+     */
+    List<Customer> findByCustNameLike(String custName);
+
+    /**
+     * 多条件查询
+     * findBy+属性名称+查询方法(精准匹配可以省略)+ 多条件连接符（and|or） + 属性名称+查询方法
+     *
+     *
+     * 当返回有多个对象的时候，需要+First；result returns more than one elements; nested exception is javax.persistence.NonUniqueResultException: result returns more than one elements
+     */
+    Customer findFirstByCustNameAndCustIndustry(String custName,String custIndustry);
 
 }
