@@ -16,7 +16,7 @@
 
 
     <!-- 1.创建entityManagerFactory对象交给spring容器管理-->
-    <bean id="entityManagerFactoty" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!--配置的扫描的包（实体类所在的包） -->
         <property name="packagesToScan" value="com.phoenix.domain" />
@@ -29,7 +29,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <!--配置是否自动创建数据库表 -->
-                <property name="generateDdl" value="false" />
+                <property name="generateDdl" value="true" />
                 <!--指定数据库类型 -->
                 <property name="database" value="MYSQL" />
                 <!--数据库方言：支持的特有语法 -->
@@ -70,11 +70,11 @@
     <!--3.整合spring data jpa-->
     <!--对此包下面对dao接口进行动态代理增强-->
     <jpa:repositories base-package="com.phoenix.dao" transaction-manager-ref="transactionManager"
-                   entity-manager-factory-ref="entityManagerFactoty" />
+                   entity-manager-factory-ref="entityManagerFactory" />
 
     <!--4.配置事务管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactoty"/>
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
     <!--5.声明式事务 -->
