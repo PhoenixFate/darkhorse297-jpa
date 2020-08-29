@@ -2,6 +2,8 @@ package com.phoenix.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 客户实体类
@@ -49,6 +51,33 @@ public class Customer implements Serializable {
     private String custAddress;
     @Column(name = "cust_phone")
     private String custPhone;
+
+    /**
+     * 使用注解的形式配置多表关系
+     * 1.声明关系
+     *      @OneToMany: 配置一对多关系
+     *      targetEntity：对方对象的字节码对象
+     * 2.配置外键(中间表)
+     *
+     * 在客户实体类上（一的一方）添加了外键的配置，所以对于客户而言，也具备了维护外键的作用
+     */
+    //配置客户和联系人之间的关系（一对多关系）
+    // @OneToMany(targetEntity = LinkMan.class,fetch = FetchType.LAZY)
+    // @JoinColumn(name = "lkm_cust_id",referencedColumnName = "cust_id")
+    /**
+     * 放弃外键维护权利
+     * 上面两句话是一的一方维护外键
+     * 但一的一方需要放弃维护外键，只需要维护关系
+     * //mappedBy里面的值是多的一方的配置的关系的属性名称
+     *
+     * cascade级联操作
+     *      CascadeType.ALL: 所有
+     *      CascadeType.PERSIST  新增
+     *                  MERGE    更新
+     *                  REMOVE   删除
+     */
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    private Set<LinkMan> linkMans= new HashSet<>();
 
     public Long getCustId() {
         return custId;
@@ -104,6 +133,14 @@ public class Customer implements Serializable {
 
     public void setCustPhone(String custPhone) {
         this.custPhone = custPhone;
+    }
+
+    public Set<LinkMan> getLinkMans() {
+        return linkMans;
+    }
+
+    public void setLinkMans(Set<LinkMan> linkMans) {
+        this.linkMans = linkMans;
     }
 
     @Override

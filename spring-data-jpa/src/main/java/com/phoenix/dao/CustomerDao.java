@@ -85,8 +85,7 @@ public interface CustomerDao extends JpaRepository<Customer,Long>, JpaSpecificat
      * 多条件查询
      * findBy+属性名称+查询方法(精准匹配可以省略)+ 多条件连接符（and|or） + 属性名称+查询方法
      *
-     *
-     * 当返回有多个对象的时候，需要+First；result returns more than one elements; nested exception is javax.persistence.NonUniqueResultException: result returns more than one elements
+     * 当返回有多个对象的时候，需要+First；
      */
     Customer findFirstByCustNameAndCustIndustry(String custName,String custIndustry);
 
