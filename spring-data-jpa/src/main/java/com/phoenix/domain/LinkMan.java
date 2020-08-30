@@ -35,8 +35,13 @@ public class LinkMan {
      *
      * * 配置外键的过程，配置到了多的一方，就会在多的一方维护外键
      *
+     * 对象导航查询，
+     * 一对多，
+     * 多的一方默认是立即加载
+     *
+     *
      */
-    @ManyToOne(targetEntity = Customer.class,fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "lkm_cust_id",referencedColumnName = "cust_id")
     private Customer customer;
 

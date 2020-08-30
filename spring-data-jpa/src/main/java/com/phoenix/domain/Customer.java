@@ -75,6 +75,11 @@ public class Customer implements Serializable {
      *      CascadeType.PERSIST  新增
      *                  MERGE    更新
      *                  REMOVE   删除
+     *
+     * 对象导航查询，
+     * 一对多
+     * 一的一方，默认就是延迟加载
+     * fetch = FetchType.LAZY
      */
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private Set<LinkMan> linkMans= new HashSet<>();
